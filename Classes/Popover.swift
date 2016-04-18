@@ -18,6 +18,7 @@ public enum PopoverOption {
   case OverlayBlur(UIBlurEffectStyle)
   case Type(PopoverType)
   case Color(UIColor)
+  case ContentPositioning(CGPoint)
 }
 
 @objc public enum PopoverType: Int {
@@ -37,6 +38,7 @@ public class Popover: UIView {
   public var blackOverlayColor: UIColor = UIColor(white: 0.0, alpha: 0.2)
   public var overlayBlur: UIBlurEffect?
   public var popoverColor: UIColor = UIColor.whiteColor()
+  public var contentPositioning: CGPoint = CGPointMake(0, 0)
 
   // custom closure
   private var didShowHandler: (() -> ())?
@@ -90,6 +92,8 @@ public class Popover: UIView {
           self.popoverType = value
         case let .Color(value):
           self.popoverColor = value
+        case let .ContentPositioning(value):
+          self.contentPositioning = value
         }
       }
     }
@@ -136,7 +140,8 @@ public class Popover: UIView {
     self.layer.position = CGPoint(x: x, y: y)
 
     frame.size.height += self.arrowSize.height
-    self.frame = frame
+    self.frame = CGRectMake(frame.origin.x + self.contentPositioning.x, frame.origin.y + self.contentPositioning.y,
+                            frame.size.width, frame.size.height)
   }
 
   public func show(contentView: UIView, fromView: UIView) {
