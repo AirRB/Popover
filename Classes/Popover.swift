@@ -225,7 +225,6 @@ public class Popover: UIView {
       UIView.animateWithDuration(self.animationOut, delay: 0,
         options: .CurveEaseInOut,
         animations: {
-          self.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
           self.blackOverlay.alpha = 0
         }){ _ in
           self.contentView.removeFromSuperview()
